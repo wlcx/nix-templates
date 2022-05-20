@@ -11,23 +11,29 @@
   outputs = { self, nixpkgs, utils, naersk, devshell, rust-overlay }:
     utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; };
-        rust = rust-bin.stable.latest.default;
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ (import rust-overlay) ];
+        };
+        rust = pkgs.rust-bin.stable.latest.default;
+        # Override naersk to use our chosen rust version from rust-overlay
         naersk-lib = naersk.lib.${system}.override {
           cargo = rust;
-          rust = rust;
+          rustc = rust;
         };
-      in {
-        defaultPackage = naersk-lib.buildPackage ./.;
+      in rec {
+        packages.default = naersk-lib.buildPackage {
+          pname = "cool-rust-disaster";
+          root = ./.;
+        };
 
-        defaultApp = utils.lib.mkApp { drv = self.defaultPackage."${system}"; };
+        apps.default = utils.lib.mkApp { drv = packages.default; };
 
         # Provide a dev env with rust and rls
         devShell = let
           pkgs = import nixpkgs {
             inherit system;
-
-            overlays = [ devshell.overlay (import rust-overlay) ];
+            overlays = [ devshell.overlay ];
           };
         in pkgs.devshell.mkShell {
           packages = with pkgs; [ (rust.override { extensions = [ "rls" ]; }) ];
