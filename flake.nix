@@ -9,6 +9,10 @@
           path = ./rust;
           description = "My preferred rust setup.";
         };
+        go = {
+          path = ./go;
+          description = "My preferred go setup.";
+        };
       };
     } // utils.lib.eachDefaultSystem (system:
       let pkgs = import nixpkgs { inherit system; };
