@@ -13,6 +13,10 @@
           path = ./go;
           description = "My preferred go setup.";
         };
+        devshell = {
+          path = ./devshell;
+          description = "A basic devshell setup";
+        };
       };
     } // utils.lib.eachDefaultSystem (system:
       let pkgs = import nixpkgs { inherit system; };
