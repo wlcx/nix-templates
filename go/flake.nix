@@ -28,7 +28,7 @@
 
         apps.default = utils.lib.mkApp { drv = packages.default; };
 
-        devShell =
+        devShells.default =
           pkgs.devshell.mkShell { packages = with pkgs; [ go gopls ]; };
       });
 }

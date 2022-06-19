@@ -30,7 +30,7 @@
         apps.default = utils.lib.mkApp { drv = packages.default; };
 
         # Provide a dev env with rust and rls
-        devShell = let
+        devShells.default = let
           pkgs = import nixpkgs {
             inherit system;
             overlays = [ devshell.overlay ];

@@ -6,7 +6,7 @@
   };
   outputs = { self, nixpkgs, utils, devshell }:
     utils.lib.eachDefaultSystem (system: {
-      devShell = let
+      devShells.default = let
         pkgs = import nixpkgs {
           inherit system;
 
