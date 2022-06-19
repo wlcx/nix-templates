@@ -1,8 +1,12 @@
 {
   description = "Samw's Nix flake templates";
-  inputs = { utils.url = "github:numtide/flake-utils"; };
+  inputs = {utils.url = "github:numtide/flake-utils";};
 
-  outputs = { self, utils, nixpkgs }:
+  outputs = {
+    self,
+    utils,
+    nixpkgs,
+  }:
     {
       templates = {
         rust = {
@@ -18,7 +22,8 @@
           description = "A basic devshell setup";
         };
       };
-    } // utils.lib.eachDefaultSystem (system:
-      let pkgs = import nixpkgs { inherit system; };
-      in { formatter = pkgs.nixfmt; });
+    }
+    // utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs {inherit system;};
+    in {formatter = pkgs.alejandra;});
 }

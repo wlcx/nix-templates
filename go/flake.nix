@@ -7,28 +7,32 @@
     inputs.flake-utils.follows = "flake-utils";
   };
 
-  outputs = { self, nixpkgs, utils, devshell }:
-    utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ devshell.overlay ];
-        };
-      in rec {
-        packages.default = pkgs.buildGoModule {
-          name = "my-project";
-          src = self;
-          vendorSha256 = "";
+  outputs = {
+    self,
+    nixpkgs,
+    utils,
+    devshell,
+  }:
+    utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [devshell.overlay];
+      };
+    in rec {
+      packages.default = pkgs.buildGoModule {
+        name = "my-project";
+        src = self;
+        vendorSha256 = "";
 
-          # Inject the git version if you want
-          #ldflags = ''
-          #  -X main.version=${if self ? rev then self.rev else "dirty"}
-          #'';
-        };
+        # Inject the git version if you want
+        #ldflags = ''
+        #  -X main.version=${if self ? rev then self.rev else "dirty"}
+        #'';
+      };
 
-        apps.default = utils.lib.mkApp { drv = packages.default; };
+      apps.default = utils.lib.mkApp {drv = packages.default;};
 
-        devShells.default =
-          pkgs.devshell.mkShell { packages = with pkgs; [ go gopls ]; };
-      });
+      devShells.default =
+        pkgs.devshell.mkShell {packages = with pkgs; [go gopls];};
+    });
 }
