@@ -1,14 +1,14 @@
 {
   description = "Another cool golang abhorration from samw";
 
-  inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs.utils.url = "github:numtide/flake-utils";
   inputs.devshell = {
     url = "github:numtide/devshell";
     inputs.flake-utils.follows = "flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, devshell }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs = { self, nixpkgs, utils, devshell }:
+    utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
           inherit system;
