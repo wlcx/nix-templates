@@ -34,5 +34,6 @@
 
       devShells.default =
         pkgs.devshell.mkShell {packages = with pkgs; [go gopls];};
+      formatter = pkgs.alejandra;
     });
 }

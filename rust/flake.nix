@@ -45,5 +45,6 @@
         pkgs.devshell.mkShell {
           packages = with pkgs; [(rust.override {extensions = ["rls"];})];
         };
+      formatter = pkgs.alejandra;
     });
 }

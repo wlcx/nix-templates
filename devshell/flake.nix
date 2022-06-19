@@ -10,14 +10,14 @@
     utils,
     devshell,
   }:
-    utils.lib.eachDefaultSystem (system: {
-      devShells.default = let
-        pkgs = import nixpkgs {
-          inherit system;
+    utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs {
+        inherit system;
 
-          overlays = [devshell.overlay];
-        };
-      in
-        pkgs.devshell.mkShell {packages = with pkgs; [];};
+        overlays = [devshell.overlay];
+      };
+    in {
+      devShells.default = pkgs.devshell.mkShell {packages = with pkgs; [];};
+      formatter = pkgs.alejandra;
     });
 }
