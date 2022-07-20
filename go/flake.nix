@@ -1,10 +1,10 @@
 {
   description = "Another cool golang abhorration from samw";
 
-  inputs.utils.url = "github:numtide/flake-utils";
+  inputs.utils.url = "github:numtide/utils";
   inputs.devshell = {
     url = "github:numtide/devshell";
-    inputs.flake-utils.follows = "flake-utils";
+    inputs.utils.follows = "utils";
   };
 
   outputs = {
