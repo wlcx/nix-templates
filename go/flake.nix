@@ -1,7 +1,7 @@
 {
   description = "Another cool golang abhorration from samw";
 
-  inputs.utils.url = "github:numtide/utils";
+  inputs.utils.url = "github:numtide/flake-utils";
   inputs.devshell = {
     url = "github:numtide/devshell";
     inputs.utils.follows = "utils";
