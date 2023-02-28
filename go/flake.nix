@@ -16,7 +16,7 @@
     utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [devshell.overlay];
+        overlays = [devshell.overlays.default];
       };
     in rec {
       packages.default = pkgs.buildGoModule {
