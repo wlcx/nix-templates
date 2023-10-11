@@ -35,7 +35,7 @@
 
       apps.default = utils.lib.mkApp {drv = packages.default;};
 
-      # Provide a dev env with rust and rls
+      # Provide a dev env with rust and rust-analyzer
       devShells.default = let
         pkgs = import nixpkgs {
           inherit system;
@@ -43,7 +43,7 @@
         };
       in
         pkgs.devshell.mkShell {
-          packages = with pkgs; [(rust.override {extensions = ["rls"];})];
+          packages = with pkgs; [(rust.override {extensions = ["rust-src"];}) rust-analyzer];
         };
       formatter = pkgs.alejandra;
     });
